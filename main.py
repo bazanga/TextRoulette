@@ -10,7 +10,7 @@ import send_sms as send
 #The session object makes use of a secret key.
 app = Flask(__name__)
 app.config.from_object(__name__)
-
+app.secret_key = "A0b1C3d4E5f6G7h8I9"
 #The unpaired phone number
 unpaired = []
        
@@ -31,7 +31,7 @@ def hello_monkey():
 		unpaired.append(outgoing)
 	    else:
 		set_partner(outgoing, unpaired.pop(0))
-        else if(body = 'NEXT'):
+        elif(body == 'NEXT'):
 	    if(incoming in unpaired):
 		return
 	    if(len(unpaired) == 0):
@@ -39,14 +39,14 @@ def hello_monkey():
 		remove_partner(outgoing)
 		unpaired.append(incoming)
 		unpaired.append(outgoing)
-	    else if(len(unpaired) == 1):
+	    elif(len(unpaired) == 1):
 		remove_partner(incoming)
 		set_partner(outgoing, unpaired.pop())
 		unpaired.append(incoming)
-	    else if(len(unpaired) == 2):
+	    elif(len(unpaired) == 2):
 		set_partner(outgoing, unpaired.pop())
 		set_partner(incoming, unpaired.pop())
-	else if(! incoming in unpaired):
+	elif not (incoming in unpaired):
 	    send.send_message(outgoing, body)
     else:   
 	session[incoming] = [request.values.get('Body')]
@@ -73,6 +73,5 @@ def send_initial(incoming, outgoing):
     send.send_message(incoming, msg + session[outgoing][1] + ')')
     send.send_message(outgoing, msg + session[incoming][1] + ')')
 
-if __name__ == "__main__":
-    app.secret_key = "A0zro0!!asdl?,whatthe?'
+if __name__ == "__main__": 
     app.run(debug=True)
