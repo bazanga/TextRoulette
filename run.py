@@ -17,13 +17,18 @@ def hello_monkey():
 	outgoing = session[incoming][1]
 	body = request.values.get('Body')
         #He wants to move to next convo
-        if(body == 'END'):
+        if(body == 'END'):		
 	    del session[incoming]
+	    if(incoming in unpaired):
+		return
 	    if(len(unpaired) == 0):
+		remove_partner(outgoing)
 		unpaired.append(outgoing)
 	    else:
 		set_partner(outgoing, unpaired.pop(0))
         else if(body = 'NEXT'):
+	    if(incoming in unpaired):
+		return
 	    if(len(unpaired) == 0):
 		remove_partner(incoming)
 		remove_partner(outgoing)
@@ -36,9 +41,9 @@ def hello_monkey():
 	    else if(len(unpaired) == 2):
 		set_partner(outgoing, unpaired.pop())
 		set_partner(incoming, unpaired.pop())
-	else:
+	else if(! incoming in unpaired):
 	    send.send_message(outgoing, body)
-    else:
+    else:   
 	session[incoming] = [request.values.get('Body')]
         if len(unpaired) == 0:
 	    unpaired.append(incoming)	
