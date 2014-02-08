@@ -13,7 +13,7 @@ app.config.from_object(__name__)
 app.secret_key = "A0b1C3d4E5f6G7h8I9"
 #The unpaired phone number
 unpaired = []
-       
+ 
 @app.route("/", methods=['GET', 'POST'])
 def hello_monkey():
     incoming = request.values.get('From')
@@ -22,7 +22,7 @@ def hello_monkey():
 	outgoing = session[incoming][1]
 	body = request.values.get('Body')
         #He wants to move to next convo
-        if(body == 'END'):		
+        if(body == 'END'):
 	    del session[incoming]
 	    if(incoming in unpaired):
 		return
@@ -48,10 +48,10 @@ def hello_monkey():
 		set_partner(incoming, unpaired.pop())
 	elif not (incoming in unpaired):
 	    send.send_message(outgoing, body)
-    else:   
+    else: 
 	session[incoming] = [request.values.get('Body')]
         if len(unpaired) == 0:
-	    unpaired.append(incoming)	
+	    unpaired.append(incoming)
         else:
 	    outgoing = unpaired.pop()
    	    set_partner(incoming, outgoing)
@@ -71,8 +71,8 @@ def send_partnerquit(outgoing):
 
 def send_initial(incoming, outgoing):
     msg = 'You have been connected to a partner ('
-    send.send_message(incoming, msg + session[outgoing][1] + ')')
-    send.send_message(outgoing, msg + session[incoming][1] + ')')
+    send.send_message(incoming, msg + session[outgoing][0] + ')')
+    send.send_message(outgoing, msg + session[incoming][0] + ')')
 
 if __name__ == "__main__": 
     app.run(debug=True)
