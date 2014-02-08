@@ -55,6 +55,7 @@ def hello_monkey():
         else:
 	    outgoing = unpaired.pop()
    	    set_partner(incoming, outgoing)
+    return ''
  
 def set_partner(a, b):
     session[a][1] = b
