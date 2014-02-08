@@ -57,7 +57,7 @@ def hello_monkey():
 	    send.send_message(outgoing, body)
     else:
 	session[incoming] = [request.values.get('Body'), '']
-        send.send_message(incoming, 'Welcome ' + request.values.get('Body') + ' to roulettechat. Please wait for the next available person.')
+        send.send_message(incoming, 'Welcome ' + request.values.get('Body') + ' to textroulette. Please wait for the next available person.')
         if len(unpaired) == 0:
 	    unpaired.append(incoming)
         else:
@@ -75,7 +75,7 @@ def send_partnerquit(outgoing):
 
 def send_initial(incoming, outgoing):
     msg = 'You have been connected to a partner: '
-    end = '.If you want to talk to someone else text NEXT. If you want to quit chatroulette type PEACE.'
+    end = '.If you want to talk to someone else text NEXT. If you want to quit textroulette type PEACE.'
     send.send_message(incoming, msg + session[outgoing][0] + end)
     send.send_message(outgoing, msg + session[incoming][0] + end)
 
